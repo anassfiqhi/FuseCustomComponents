@@ -2,29 +2,31 @@
     <FileImageSource ux:Global="FlashOn" File="Assets/Images/Light.png" />
     <FileImageSource ux:Global="FlashOff" File="Assets/Images/noLight.png" />
     
-    <StackPanel ux:Class="QrScannerBoxView" Text="Put the box on the QrCode to Scan">
+    <StackPanel ux:Class="QrScannerBoxView" Text="Put the box on the QrCode to Scan" LaserColor="#ea3c53" BoxColor="#7F47DD">
         <string ux:Property="Text" />
+        <float4 ux:Property="LaserColor" />
+        <float4 ux:Property="BoxColor" />
         <Rectangle ux:Name="QrScannerBox" Alignment="Center" MaxWidth="300" MaxHeight="300" Width="window().width/1.5" Height="window().width/1.5">
             <Path Alignment="TopLeft" Data="M576,649h-80.8c-34.9,0-63.2,28.3-63.2,63.2v80.2" Width="50" Fill="#7f47dd00" HitTestMode="Children">
-                <Stroke Color="#7F47DD" Width="5" />
-                <DropShadow Color="#7F47DD" Distance="0" Size="30" />
+                <Stroke Color="{Property BoxColor}" Width="5" />
+                <DropShadow Color="{Property BoxColor}" Distance="0" Size="30" />
             </Path>
             <Path Alignment="TopRight" Data="M1078.1,794.9V714c0-34.9-28.3-63.2-63.2-63.2h-80.2" Width="50" Fill="#7f47dd00" HitTestMode="Children">
-                <Stroke Color="#7F47DD" Width="5" />
-                <DropShadow Color="#7F47DD" Distance="0" Size="30" />
+                <Stroke Color="{Property BoxColor}" Width="5" />
+                <DropShadow Color="{Property BoxColor}" Distance="0" Size="30" />
                 <!-- <Rotation Degrees="0"/> -->
             </Path>
             <Path Alignment="BottomRight" Data="M934.1,1298.7h80.8c34.9,0,63.2-28.3,63.2-63.2v-80.2" Width="50" Fill="#7f47dd00" HitTestMode="Children">
-                <Stroke Color="#7F47DD" Width="5" />
-                <DropShadow Color="#7F47DD" Distance="0" Size="30" />
+                <Stroke Color="{Property BoxColor}" Width="5" />
+                <DropShadow Color="{Property BoxColor}" Distance="0" Size="30" />
                 <!-- <Rotation Degrees="0"/> -->
             </Path>
             <Path Alignment="BottomLeft" Data="M432,1152.8v80.8c0,34.9,28.3,63.2,63.2,63.2h80.2" Width="50" Fill="#7f47dd00" HitTestMode="Children">
-                <Stroke Color="#7F47DD" Width="5" />
-                <DropShadow Color="#7F47DD" Distance="0" Size="30" />
+                <Stroke Color="{Property BoxColor}" Width="5" />
+                <DropShadow Color="{Property BoxColor}" Distance="0" Size="30" />
                 <!-- <Rotation Degrees="0"/> -->
             </Path>
-            <Rectangle ux:Name="Laser" Width="80%" Height="5" CornerRadius="50" Color="#ea3c53">
+            <Rectangle ux:Name="Laser" Width="80%" Height="5" CornerRadius="50" Color="{Property LaserColor}">
                 <WhileVisible>
                     <Cycle ux:Name="LaserCycle" Target="Laser.Y" Low="height(QrScannerBox)/30"
                     High="height(QrScannerBox)/2.9"
@@ -33,7 +35,7 @@
                     High="5"
                         Frequency=".5" Waveform="Sine" Easing="QuadraticInOut" /> -->
                 </WhileVisible>
-                <Shadow ux:Name="LaserShadow" Size="15" Color="#ea3c53" />
+                <Shadow ux:Name="LaserShadow" Size="15" Color="{Property LaserColor}" />
             </Rectangle>
         </Rectangle>
         <Text Value="{Property Text}"  Margin="0,50,0,0"
@@ -57,8 +59,12 @@
 
 
     <Rectangle>
-        <ToggleTorch Alignment="TopRight" Margin="10,50,50,10" />
-        <QrScannerBoxView Alignment="Center" ux:Name="QrScannerBox" />
+        <ToggleTorch ux:Name="ToggleTorch" Alignment="TopRight" Margin="10,50,50,10" />
+        <QrScannerBoxView Background="#7f47dd00" Alignment="Center" ux:Name="QrScannerBox">
+            <DoubleClicked>
+                <Toggle Target="ToggleTorch" />
+            </DoubleClicked>
+        </QrScannerBoxView>
     </Rectangle>
     
 </App>
