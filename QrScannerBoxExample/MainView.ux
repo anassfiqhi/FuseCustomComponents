@@ -2,7 +2,8 @@
     <FileImageSource ux:Global="FlashOn" File="Assets/Images/Light.png" />
     <FileImageSource ux:Global="FlashOff" File="Assets/Images/noLight.png" />
     
-    <StackPanel ux:Class="QrScannerBoxView">
+    <StackPanel ux:Class="QrScannerBoxView" Text="Put the box on the QrCode to Scan">
+        <string ux:Property="Text" />
         <Rectangle ux:Name="QrScannerBox" Alignment="Center" MaxWidth="300" MaxHeight="300" Width="window().width/1.5" Height="window().width/1.5">
             <Path Alignment="TopLeft" Data="M576,649h-80.8c-34.9,0-63.2,28.3-63.2,63.2v80.2" Width="50" Fill="#7f47dd00" HitTestMode="Children">
                 <Stroke Color="#7F47DD" Width="5" />
@@ -35,7 +36,7 @@
                 <Shadow ux:Name="LaserShadow" Size="15" Color="#ea3c53" />
             </Rectangle>
         </Rectangle>
-        <Text Value="Put the box on the QrCode to Scan"  Margin="0,50,0,0"
+        <Text Value="{Property Text}"  Margin="0,50,0,0"
             FontSize="20" Alignment="Center" Color="#7F47DD" >
             <DropShadow  Color="#7F47DD" Size="15" />
             <DropShadow  />    
