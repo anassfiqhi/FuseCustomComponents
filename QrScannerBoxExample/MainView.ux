@@ -1,6 +1,7 @@
 <App>
     <FileImageSource ux:Global="FlashOn" File="Assets/Images/Light.png" />
     <FileImageSource ux:Global="FlashOff" File="Assets/Images/noLight.png" />
+    <FileImageSource ux:Global="Rotate" File="Assets/Images/Rotate.png" />
     
     <StackPanel ux:Class="QrScannerBoxView" Text="Put the box on the QrCode to Scan" LaserColor="#ea3c53" BoxColor="#7F47DD">
         <string ux:Property="Text" />
@@ -48,7 +49,8 @@
      <ToggleControl ux:Class="ToggleTorch" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
          <Image File="Assets/Images/Light.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
          <WhileTrue Value="{ReadProperty this.Value}">
-             <Change Target="ImageToggle.Source" Value="FlashOff" Duration="0.15" Easing="CubicOut" EasingBack="CubicIn" />
+            <Change Target="ImageToggle.Source" Value="FlashOff" Duration="0.15" Easing="CubicOut" EasingBack="CubicIn" />
+            <Scale Factor=".9" Duration=".1" />
          </WhileTrue>
          
          <Clicked>
@@ -56,15 +58,29 @@
          </Clicked>
          <DropShadow  Color="#7F47DD" Size="15" />
      </ToggleControl>
+     <ToggleControl ux:Class="ToggleRotate" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
+         <Image File="Assets/Images/Rotate.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
+         <WhileTrue Value="{ReadProperty this.Value}">
+            <!-- <Change Target="ImageToggle.Source" Value="Rotate" Duration="0.15" Easing="CubicOut" EasingBack="CubicIn" /> -->
+            <Rotate DegreesY="180" />
+         </WhileTrue>
+         
+         <Clicked>
+             <Toggle Target="this" />
+             <Scale Factor=".9" Duration=".1" />
+         </Clicked>
+         <DropShadow  Color="#7F47DD" Size="15" />
+     </ToggleControl>
 
 
     <Rectangle>
-        <ToggleTorch ux:Name="ToggleTorch" Alignment="TopRight" Margin="10,50,50,10" />
+        <ToggleTorch ux:Name="ToggleTorch" Alignment="BottomRight" Margin="0,0,50,50" />
         <QrScannerBoxView Background="#7f47dd00" Alignment="Center" ux:Name="QrScannerBox">
             <DoubleClicked>
                 <Toggle Target="ToggleTorch" />
             </DoubleClicked>
         </QrScannerBoxView>
+        <ToggleRotate Alignment="BottomLeft" Margin="50,0,0,50" />
     </Rectangle>
     
 </App>
