@@ -1,0 +1,13 @@
+{
+  "Packages": [
+    "Fuse",
+    "FuseJS",
+    "Fuse.Scripting",
+    "Uno.Permissions"
+  ],
+  "Includes": [
+    "*",
+    "iOS/BarcodeView.h:ObjCHeader:iOS",
+	"iOS/BarcodeView.mm:ObjCSource:iOS",
+  ]
+}

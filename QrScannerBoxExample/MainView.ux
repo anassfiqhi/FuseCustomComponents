@@ -2,7 +2,7 @@
     <FileImageSource ux:Global="FlashOn" File="Assets/Images/Light.png" />
     <FileImageSource ux:Global="FlashOff" File="Assets/Images/noLight.png" />
     <FileImageSource ux:Global="Rotate" File="Assets/Images/Rotate.png" />
-    
+
     <StackPanel ux:Class="QrScannerBoxView" Text="Put the box on the QrCode to Scan" LaserColor="#ea3c53" BoxColor="#7F47DD">
         <string ux:Property="Text" />
         <float4 ux:Property="LaserColor" />
@@ -29,9 +29,7 @@
             </Path>
             <Rectangle ux:Name="Laser" Width="80%" Height="5" CornerRadius="50" Color="{Property LaserColor}">
                 <WhileVisible>
-                    <Cycle ux:Name="LaserCycle" Target="Laser.Y" Low="height(QrScannerBox)/30"
-                    High="height(QrScannerBox)/2.9"
-                        Frequency=".45" Waveform="Triangle" Easing="CircularInOut" />
+                    <Cycle ux:Name="LaserCycle" Target="Laser.Y" Low="height(QrScannerBox)/30" High="height(QrScannerBox)/2.9" Frequency=".45" Waveform="Triangle" Easing="CircularInOut" />
                     <!-- <Cycle ux:Name="LaserShadowCycle" Target="LaserShadow.Distance" Low="-5"
                     High="5"
                         Frequency=".5" Waveform="Sine" Easing="QuadraticInOut" /> -->
@@ -39,48 +37,125 @@
                 <Shadow ux:Name="LaserShadow" Size="15" Color="{Property LaserColor}" />
             </Rectangle>
         </Rectangle>
-        <Text Value="{Property Text}"  Margin="0,50,0,0"
-            FontSize="20" Alignment="Center" Color="#7F47DD" >
-            <DropShadow  Color="#7F47DD" Size="15" />
-            <DropShadow  />    
+        <Text Value="{Property Text}" Margin="0,50,0,0" FontSize="20" Alignment="Center" Color="#7F47DD">
+            <DropShadow Color="#7F47DD" Size="15" />
+            <DropShadow />
         </Text>
     </StackPanel>
-    
-     <ToggleControl ux:Class="ToggleTorch" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
-         <Image File="Assets/Images/Light.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
-         <WhileTrue Value="{ReadProperty this.Value}">
+
+    <ToggleControl ux:Class="ToggleTorch" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
+        <Image File="Assets/Images/Light.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
+        <WhileTrue Value="{ReadProperty this.Value}">
             <Change Target="ImageToggle.Source" Value="FlashOff" Duration="0.15" Easing="CubicOut" EasingBack="CubicIn" />
             <Scale Factor=".9" Duration=".1" />
-         </WhileTrue>
-         
-         <Clicked>
-             <Toggle Target="this" />
-         </Clicked>
-         <DropShadow  Color="#7F47DD" Size="15" />
-     </ToggleControl>
-     <ToggleControl ux:Class="ToggleRotate" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
-         <Image File="Assets/Images/Rotate.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
-         <WhileTrue Value="{ReadProperty this.Value}">
+        </WhileTrue>
+
+        <Clicked>
+            <Toggle Target="this" />
+        </Clicked>
+        <DropShadow Color="#7F47DD" Size="15" />
+    </ToggleControl>
+    <ToggleControl ux:Class="ToggleRotate" Value="false" BoxSizing="FillAspect" Aspect="1" Margin="2" HitTestMode="LocalBounds" Width="48" Height="48">
+        <Image File="Assets/Images/Rotate.png" ux:Name="ImageToggle" Alignment="Center" Width="30" Height="30" Color="#7F47DD" />
+        <WhileTrue Value="{ReadProperty this.Value}">
             <!-- <Change Target="ImageToggle.Source" Value="Rotate" Duration="0.15" Easing="CubicOut" EasingBack="CubicIn" /> -->
             <Rotate DegreesY="180" />
-         </WhileTrue>
-         
-         <Clicked>
-             <Toggle Target="this" />
-             <Scale Factor=".9" Duration=".1" />
-         </Clicked>
-         <DropShadow  Color="#7F47DD" Size="15" />
-     </ToggleControl>
+        </WhileTrue>
 
+        <Clicked>
+            <Toggle Target="this" />
+            <Scale Factor=".9" Duration=".1" />
+        </Clicked>
+        <DropShadow Color="#7F47DD" Size="15" />
+    </ToggleControl>
 
-    <Rectangle>
-        <ToggleTorch ux:Name="ToggleTorch" Alignment="BottomRight" Margin="0,0,50,50" />
-        <QrScannerBoxView Background="#7f47dd00" Alignment="Center" ux:Name="QrScannerBox">
-            <DoubleClicked>
-                <Toggle Target="ToggleTorch" />
-            </DoubleClicked>
-        </QrScannerBoxView>
-        <ToggleRotate Alignment="BottomLeft" Margin="50,0,0,50" />
-    </Rectangle>
-    
+        <DockPanel>
+            
+            
+            <NativeViewHost Dock="Fill">
+                <Rectangle ZOffset="100" Dock="Fill">
+                    <QrScannerBoxView Background="#7f47dd00" Alignment="Center" ux:Name="QrScannerBox">
+                        <DoubleClicked>
+                            <Toggle Target="ToggleTorch" />
+                            <Callback Handler="{toggleFlash}" /> 
+                        </DoubleClicked>
+                    </QrScannerBoxView>
+                    <ToggleTorch ux:Name="ToggleTorch" Alignment="BottomRight" Margin="0,0,50,50">
+                        <Clicked>
+                            <Callback Handler="{toggleFlash}" /> 
+                        </Clicked>
+                    </ToggleTorch>
+                    <Text Value="{code}" Color="#7F47DD" FontSize="20" Alignment="TopCenter" Margin="0,50,0,0"/>
+                    <ToggleRotate Alignment="BottomLeft" Margin="50,0,0,50">
+                        <!-- <Callback Handler="{}" />  -->
+                    </ToggleRotate>
+                </Rectangle>
+                <BarcodeScanner ux:Name="barcodeScanner" /> 
+            </NativeViewHost>
+            
+        </DockPanel>
+
+        <JavaScript>
+            var Observable = require("FuseJS/Observable");
+            var Permissions = require("BarcodeScanner/Permissions");
+
+            var code = Observable("N/A");
+
+            Permissions
+            .requrestCamera()
+            .then(() => console.log("Got permission to use camera"))
+            .catch(err => console.log("Failed to acquire camera permission: " + err))
+
+            var BarcodeScanner = barcodeScanner
+
+            BarcodeScanner.onCodeScanned(result => {
+            console.log("Code scanned: " + result);
+            code.value = result;
+            })
+
+            function toggleFlash() {
+            BarcodeScanner
+            .getFlashlightEnabled()
+            .then(isEnabled => BarcodeScanner.setFlashlightEnabled(!isEnabled));
+            }
+
+            function start() {
+            BarcodeScanner
+            .start()
+            .then(() => console.log("Barcode scanner started"))
+            .catch(err => console.log("Failed to start barcode scanner: " + err));
+            }
+
+            function stop() {
+            BarcodeScanner
+            .stop()
+            .then(() => console.log("Barcode scanner stopped"))
+            .catch(err => console.log("Failed to stop barcode scanner: " + err));
+            }
+
+            function pause() {
+            BarcodeScanner
+            .pause()
+            .then(() => console.log("Barcode scanner paused"))
+            .catch(err => console.log("Failed to pause barcode scanner: " + err));
+            }
+
+            function resume() {
+            BarcodeScanner
+            .resume()
+            .then(() => console.log("Barcode scanner resumed"))
+            .catch(err => console.log("Failed to resume barcode scanner: " + err));
+            }
+
+            start()
+
+            module.exports = {
+            toggleFlash,
+            start,
+            stop,
+            pause,
+            resume,
+            code
+            }
+        </JavaScript>
 </App>

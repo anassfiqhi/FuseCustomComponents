@@ -4,6 +4,9 @@
     "Fuse",
     "FuseJS"
   ],
+  "Projects": [
+  	"BarcodeScanner/BarcodeScanner.unoproj"
+  ],
   "Includes": [
     "*",
     "Assets"
