@@ -85,7 +85,11 @@
                             <Callback Handler="{toggleFlash}" /> 
                         </Clicked>
                     </ToggleTorch>
-                    <Text Value="{code}" Color="#7F47DD" FontSize="20" Alignment="TopCenter" Margin="0,50,0,0"/>
+                    <Text Value="{code}" Color="#7F47DD" FontSize="20"
+                     Alignment="TopCenter" Margin="0,50,0,0">
+                        <DropShadow Color="#7F47DD" Size="15" />
+                        <DropShadow />
+                    </Text>
                     <ToggleRotate Alignment="BottomLeft" Margin="50,0,0,50">
                         <!-- <Callback Handler="{}" />  -->
                     </ToggleRotate>
